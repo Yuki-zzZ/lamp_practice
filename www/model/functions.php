@@ -138,3 +138,32 @@ function is_valid_upload_image($image){
 function h($str){
   return htmlspecialchars($str, ENT_QUOTES, "UTF-8");
 }
+
+function save_data_for_histories_and_details($db, $carts){
+  if(validate_cart_purchase($carts) === false){
+    return false;
+  }
+  foreach($carts as $cart){
+    if(update_item_stock(
+        $db, 
+        $cart['item_id'], 
+        $cart['stock'] - $cart['amount']
+      ) === false){
+      set_error($cart['name'] . 'の購入に失敗しました。');
+    }
+  }
+  
+}
+
+function insert_purchase_histories($db, $user_id){
+  $db->beginTransaction();
+  $sql = "
+    INSERT INTO
+      purchase_histories(
+        user_id
+      )
+    VALUES('{$user_id}');
+  ";
+
+  return execute_query($db, $sql);
+}
