@@ -105,20 +105,33 @@ function purchase_carts($db, $carts){
   if(validate_cart_purchase($carts) === false){
     return false;
   }
+  $db->beginTransaction();
+  try{
   if(insert_purchase_histories($db, $carts[0]['user_id'])=== false){
-    set_error('データ保存に失敗しました。');
+    throw new Exception('データ保存に失敗しました。');
   }
+  $purchase_id = $db->lastInsertId(); 
   foreach($carts as $cart){
     if(update_item_stock(
-        $db, 
-        $cart['item_id'], 
-        $cart['stock'] - $cart['amount']
-      ) === false){
-      set_error($cart['name'] . 'の購入に失敗しました。');
+    $db, 
+    $cart['item_id'], 
+    $cart['stock'] - $cart['amount']
+    ) === false){
+      throw new Exception($cart['name'] . 'の購入に失敗しました。');
     }
-    if(insert_purchase_details($db, $cart['purchase_id'], $$cart['item_id'], $$cart['price'], $$cart['amount'])===false){
-      set_error('データ保存に失敗しました。');
-    }
+    if(insert_purchase_details(
+    $db, $purchase_id, 
+    $cart['item_id'],
+    $cart['price'],
+    $cart['amount']
+    )===false){
+  throw new Exception('データ保存に失敗しました。');
+  }
+}
+    $db->commit();
+  }catch (Exception $e){
+    $db->rollback();
+    set_error('データベース処理でエラーが発生しました。理由：'.$e->getMessage());
   }
   
   delete_user_carts($db, $carts[0]['user_id']);
