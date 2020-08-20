@@ -13,6 +13,12 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
-$items = get_open_items($db);
+$page_num = $_GET['page'] - 1;
+$limit_page = $page_num * 8;
+
+$items = get_open_items($db, $limit_page);
+
+$count = get_open_items_for_count($db);
+$page = ceil($count['count'] / 8);
 
 include_once VIEW_PATH . 'index_view.php';

@@ -39,9 +39,36 @@
           </div>
         </div>
       <?php } ?>
-      </div>
     </div>
   </div>
-  
+
+  <div class="page">
+    <div class="row">
+
+      <div class="previous_page col-2">
+        <?php if($page_num + 1 !== 1){?>
+          <a href="./index.php?page=<?php echo $page_num-1 ;?>">前へ</a>
+        <?php }?>
+      </div>
+
+      <div class="pagination col-8">
+          <?php for($i = 1; $i <= $page; $i++){?>
+            <?php if($page_num + 1 === $i){?>
+              <a style="color: black;" href="./index.php?page=<?php echo $i ;?>"><?php echo $i;?></a>
+            <?php }else{ ?>
+              <a style="color: grey;" href="./index.php?page=<?php echo $i ;?>"><?php echo $i;?></a>
+            <?php }?>
+          <?php }?>
+      </div>
+
+      <div class="next_page col-2">
+        <?php if($page_num + 1 !== (int)$page){?>
+          <a href="./index.php?page=<?php echo $page_num + 1 ;?>">次へ</a>
+        <?php }?>
+      </div>
+    </div>
+    <P><?php echo $count['count']; ?> 件中 <?php echo $page_num * 8 + 1?>件目 〜<?php echo $page_num * 8 + count($items);?>件目</P>
+  </div>
+</div>
 </body>
 </html>
