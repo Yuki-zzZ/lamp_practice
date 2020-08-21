@@ -13,7 +13,10 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
-$get_page = $_GET['page'];
+$get_page = get_get('page');
+if($get_page === ''){
+  $get_page = 1;
+}
 $page_num = $get_page - 1;
 $limit_page = $page_num * 8;
 

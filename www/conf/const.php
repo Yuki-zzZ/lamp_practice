@@ -17,7 +17,7 @@ define('DB_CHARSET', 'utf8');
 define('SIGNUP_URL', '/signup.php');
 define('LOGIN_URL', '/login.php');
 define('LOGOUT_URL', '/logout.php');
-define('HOME_URL', '/index.php?page=1');
+define('HOME_URL', '/index.php');
 define('CART_URL', '/cart.php');
 define('FINISH_URL', '/finish.php');
 define('ADMIN_URL', '/admin.php');
