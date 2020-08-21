@@ -13,7 +13,8 @@ if(is_logined() === false){
 $db = get_db_connect();
 $user = get_login_user($db);
 
-$page_num = $_GET['page'] - 1;
+$get_page = $_GET['page'];
+$page_num = $get_page - 1;
 $limit_page = $page_num * 8;
 
 $items = get_open_items($db, $limit_page);

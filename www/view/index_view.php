@@ -44,14 +44,14 @@
 
   <div class="page">
     <div class="row">
-
+          <!-- previous page -->
       <div class="previous_page col-2">
         <?php if($page_num + 1 !== 1){?>
-          <a href="./index.php?page=<?php echo $page_num-1 ;?>">前へ</a>
+          <a href="./index.php?page=<?php echo $get_page-1 ;?>">前へ</a>
         <?php }?>
       </div>
-
-      <div class="pagination col-8">
+          <!-- pagination -->
+      <div class="pagination justify-content-center col-8">
           <?php for($i = 1; $i <= $page; $i++){?>
             <?php if($page_num + 1 === $i){?>
               <a style="color: black;" href="./index.php?page=<?php echo $i ;?>"><?php echo $i;?></a>
@@ -60,14 +60,14 @@
             <?php }?>
           <?php }?>
       </div>
-
+          <!-- next page -->
       <div class="next_page col-2">
         <?php if($page_num + 1 !== (int)$page){?>
-          <a href="./index.php?page=<?php echo $page_num + 1 ;?>">次へ</a>
+          <a href="./index.php?page=<?php echo $get_page + 1 ;?>">次へ</a>
         <?php }?>
       </div>
     </div>
-    <P><?php echo $count['count']; ?> 件中 <?php echo $page_num * 8 + 1?>件目 〜<?php echo $page_num * 8 + count($items);?>件目</P>
+    <P><?php echo $count['count']; ?> 件中 <?php echo $page_num * 8 + 1?>件目 〜 <?php echo $page_num * 8 + count($items);?>件目 表示</P>
   </div>
 </div>
 </body>
